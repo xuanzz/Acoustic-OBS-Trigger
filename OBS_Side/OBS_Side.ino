@@ -36,7 +36,6 @@ void setup() {
 
 void loop() {
   // Listen for any knock at all.
-  knockSensorValue = analogRead(knockSensor);
   
   if (digitalRead(programSwitch)==HIGH){  // is the program button pressed?
     programButtonPressed = true;          // Yes, so lets save that state
@@ -48,5 +47,6 @@ void loop() {
   
   if (knockSensorValue >=threshold){
     listenToSecretKnock();
+  knockSensorValue = 1023-analogRead(knockSensor);
   }
 } 

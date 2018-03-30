@@ -23,8 +23,8 @@ void listenToSecretKnock(){
   }
   do {
     //listen for the next knock or wait for it to timeout. 
-    knockSensorValue = analogRead(knockSensor);
     if (knockSensorValue >=threshold){                   //got another knock...
+    knockSensorValue = 1023 - analogRead(knockSensor);
       //record the delay time.
       Serial.println("knock.");
       now=millis();
