@@ -1,9 +1,9 @@
 // Pin definitions
-const int knockSensor = 0;         // Piezo sensor on pin 0.
+const int knockSensor = 1;         // Piezo sensor on pin 0.
 const int programSwitch = 2;       // If this is high we program a new code.
-const int lockMotor = 12;           // Gear motor used to turn the lock.
-const int redLED = 4;              // Status LED
-const int greenLED = 5;        
+const int lockMotor = 21;           // Gear motor used to turn the lock.
+const int redLED = 3;              // Status LED
+const int greenLED = 2;        
 // Status LED
  
 // Tuning constants.  Could be made vars and hoooked to potentiometers for soft configuration, etc.
