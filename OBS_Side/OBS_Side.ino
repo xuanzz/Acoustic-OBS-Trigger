@@ -3,7 +3,8 @@ const int knockSensor = 0;         // Piezo sensor on pin 0.
 const int programSwitch = 2;       // If this is high we program a new code.
 const int lockMotor = 12;           // Gear motor used to turn the lock.
 const int redLED = 4;              // Status LED
-const int greenLED = 5;            // Status LED
+const int greenLED = 5;        
+// Status LED
  
 // Tuning constants.  Could be made vars and hoooked to potentiometers for soft configuration, etc.
 const int threshold = 512;           // Minimum signal from the piezo to register as a knock
@@ -36,17 +37,16 @@ void setup() {
 
 void loop() {
   // Listen for any knock at all.
-  
-  if (digitalRead(programSwitch)==HIGH){  // is the program button pressed?
-    programButtonPressed = true;          // Yes, so lets save that state
-    digitalWrite(redLED, HIGH);           // and turn on the red light too so we know we're programming.
-  } else {
-    programButtonPressed = false;
-    digitalWrite(redLED, LOW);
-  }
+   knockSensorValue = 1023 - analogRead(knockSensor);
+//  if (digitalRead(programSwitch)==HIGH){  // is the program button pressed?
+//    programButtonPressed = true;          // Yes, so lets save that state
+//    digitalWrite(redLED, HIGH);           // and turn on the red light too so we know we're programming.
+//  } else {
+//    programButtonPressed = false;
+//    digitalWrite(redLED, LOW);
+//  }
   
   if (knockSensorValue >=threshold){
     listenToSecretKnock();
-  knockSensorValue = 1023-analogRead(knockSensor);
   }
 } 

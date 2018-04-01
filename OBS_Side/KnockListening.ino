@@ -1,61 +1,61 @@
 // Records the timing of knocks.
-void listenToSecretKnock(){
-  Serial.println("knock starting");   
+void listenToSecretKnock() {
+  Serial.println("knock starting");
 
   int i = 0;
   // First lets reset the listening array.
-  for (i=0;i<maximumKnocks;i++){
-    knockReadings[i]=0;
+  for (i = 0; i < maximumKnocks; i++) {
+    knockReadings[i] = 0;
   }
-  
-  int currentKnockNumber=0;               // Incrementer for the array.
-  int startTime=millis();                 // Reference for when this knock started.
-  int now=millis();
-  
+
+  int currentKnockNumber = 0;             // Incrementer for the array.
+  int startTime = millis();               // Reference for when this knock started.
+  int now = millis();
+
   digitalWrite(greenLED, LOW);            // we blink the LED for a bit as a visual indicator of the knock.
-  if (programButtonPressed==true){
-     digitalWrite(redLED, LOW);                         // and the red one too if we're programming a new knock.
+  if (programButtonPressed == true) {
+    digitalWrite(redLED, LOW);                         // and the red one too if we're programming a new knock.
   }
   delay(knockFadeTime);                                 // wait for this peak to fade before we listen to the next one.
-  digitalWrite(greenLED, HIGH);  
-  if (programButtonPressed==true){
-     digitalWrite(redLED, HIGH);                        
+  digitalWrite(greenLED, HIGH);
+  if (programButtonPressed == true) {
+    digitalWrite(redLED, HIGH);
   }
   do {
-    //listen for the next knock or wait for it to timeout. 
-    if (knockSensorValue >=threshold){                   //got another knock...
     knockSensorValue = 1023 - analogRead(knockSensor);
+    //listen for the next knock or wait for it to timeout.
+    if (knockSensorValue >= threshold) {                 //got another knock...
       //record the delay time.
       Serial.println("knock.");
-      now=millis();
-      knockReadings[currentKnockNumber] = now-startTime;
+      now = millis();
+      knockReadings[currentKnockNumber] = now - startTime;
       currentKnockNumber ++;                             //increment the counter
-      startTime=now;          
+      startTime = now;
       // and reset our timer for the next knock
-      digitalWrite(greenLED, LOW);  
-      if (programButtonPressed==true){
+      digitalWrite(greenLED, LOW);
+      if (programButtonPressed == true) {
         digitalWrite(redLED, LOW);                       // and the red one too if we're programming a new knock.
       }
       delay(knockFadeTime);                              // again, a little delay to let the knock decay.
       digitalWrite(greenLED, HIGH);
-      if (programButtonPressed==true){
-        digitalWrite(redLED, HIGH);                         
+      if (programButtonPressed == true) {
+        digitalWrite(redLED, HIGH);
       }
     }
 
-    now=millis();
-    
+    now = millis();
+
     //did we timeout or run out of knocks?
-  } while ((now-startTime < knockComplete) && (currentKnockNumber < maximumKnocks));
-  
+  } while ((now - startTime < knockComplete) && (currentKnockNumber < maximumKnocks));
+
   //we've got our knock recorded, lets see if it's valid
-  if (programButtonPressed==false){             // only if we're not in progrmaing mode.
-    if (validateKnock() == true){
-      triggerDoorUnlock(); 
+  if (programButtonPressed == false) {          // only if we're not in progrmaing mode.
+    if (validateKnock() == true) {
+      triggerDoorUnlock();
     } else {
       Serial.println("Secret knock failed.");
       digitalWrite(greenLED, LOW);      // We didn't unlock, so blink the red LED as visual feedback.
-      for (i=0;i<4;i++){          
+      for (i = 0; i < 4; i++) {
         digitalWrite(redLED, HIGH);
         delay(100);
         digitalWrite(redLED, LOW);
@@ -69,13 +69,13 @@ void listenToSecretKnock(){
     Serial.println("New lock stored.");
     digitalWrite(redLED, LOW);
     digitalWrite(greenLED, HIGH);
-    for (i=0;i<3;i++){
+    for (i = 0; i < 3; i++) {
       delay(100);
       digitalWrite(redLED, HIGH);
       digitalWrite(greenLED, LOW);
       delay(100);
       digitalWrite(redLED, LOW);
-      digitalWrite(greenLED, HIGH);      
+      digitalWrite(greenLED, HIGH);
     }
   }
 }
