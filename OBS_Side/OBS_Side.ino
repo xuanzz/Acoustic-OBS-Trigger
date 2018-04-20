@@ -1,18 +1,21 @@
+//Magnet Settings
+#include <Servo.h>
+Servo myservo;  // create servo object to control a servo
+
 // Pin definitions
 const int knockSensor = 1;         // Piezo sensor on pin 0.
 const int programSwitch = 2;       // If this is high we program a new code.
 const int lockMotor = 21;           // Gear motor used to turn the lock.
 const int redLED = 3;              // Status LED
-const int greenLED = 2;        
+const int greenLED = 2;
 // Status LED
- 
+
 // Tuning constants.  Could be made vars and hoooked to potentiometers for soft configuration, etc.
 const int threshold = 512;           // Minimum signal from the piezo to register as a knock
 const int rejectValue = 25;        // If an individual knock is off by this percentage of a knock we don't unlock..
 const int averageRejectValue = 15; // If the average timing of the knocks is off by this percent we don't unlock.
 const int knockFadeTime = 150;     // milliseconds we allow a knock to fade before we listen for another one. (Debounce timer.)
 const int lockTurnTime = 650;      // milliseconds that we run the motor to get it to go a half turn.
-
 const int maximumKnocks = 20;       // Maximum number of knocks to listen for.
 const int knockComplete = 1200;     // Longest time to wait for a knock before we assume that it's finished.
 
@@ -28,25 +31,24 @@ void setup() {
   pinMode(redLED, OUTPUT);
   pinMode(greenLED, OUTPUT);
   pinMode(programSwitch, INPUT);
-  
   Serial.begin(9600);                     // Uncomment the Serial.bla lines for debugging.
   Serial.println("Program start.");       // but feel free to comment them out after it's working right.
-  
   digitalWrite(greenLED, HIGH);      // Green LED on, everything is go.
+  MagnetSetup();
 }
 
 void loop() {
   // Listen for any knock at all.
-   knockSensorValue = 1023 - analogRead(knockSensor);
-//  if (digitalRead(programSwitch)==HIGH){  // is the program button pressed?
-//    programButtonPressed = true;          // Yes, so lets save that state
-//    digitalWrite(redLED, HIGH);           // and turn on the red light too so we know we're programming.
-//  } else {
-//    programButtonPressed = false;
-//    digitalWrite(redLED, LOW);
-//  }
-  
-  if (knockSensorValue >=threshold){
+  knockSensorValue = 1023 - analogRead(knockSensor);
+  //  if (digitalRead(programSwitch)==HIGH){  // is the program button pressed?
+  //    programButtonPressed = true;          // Yes, so lets save that state
+  //    digitalWrite(redLED, HIGH);           // and turn on the red light too so we know we're programming.
+  //  } else {
+  //    programButtonPressed = false;
+  //    digitalWrite(redLED, LOW);
+  //  }
+
+  if (knockSensorValue >= threshold) {
     listenToSecretKnock();
   }
-} 
+}

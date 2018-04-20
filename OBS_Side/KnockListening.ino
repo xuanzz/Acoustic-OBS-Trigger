@@ -1,7 +1,7 @@
 // Records the timing of knocks.
 void listenToSecretKnock() {
   Serial.println("knock starting");
-
+Serial.println("knock starting");
   int i = 0;
   // First lets reset the listening array.
   for (i = 0; i < maximumKnocks; i++) {
