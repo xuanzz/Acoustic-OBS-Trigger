@@ -15,6 +15,10 @@ void updateValue()
     currentSampleCount ++;
   }
   capturedValue[currentSampleCount] = analogRead(knockSensor);
+  if (abs((capturedValue[currentSampleCount] - averageValue)) > threshold * 2)
+  {
+    averageSamplingSetup();
+  }
   //Serial.println("update Value " + (String)currentSampleCount + ": " + (String)capturedValue[currentSampleCount]);
 
   if (currentSampleCount % 1 == 0)
