@@ -32,7 +32,6 @@ Servo myservo;  // create servo object to control a servo
 // Pin definitions
 const int knockSensor = 1;         // Piezo sensor on pin 0.
 const int programSwitch = 2;       // If this is high we program a new code.
-const int lockMotor = 21;           // Gear motor used to turn the lock.
 const int redLED = 3;              // Status LED
 const int greenLED = 2;
 // Status LED
@@ -57,12 +56,11 @@ void setup() {
   stripSetup();
   getThreshold();
   averageSamplingSetup();
-  pinMode(lockMotor, OUTPUT);
   pinMode(redLED, OUTPUT);
   pinMode(greenLED, OUTPUT);
   pinMode(programSwitch, INPUT);
-  Serial.begin(9600);                     // Uncomment the Serial.bla lines for debugging.
-  Serial.println("Program start.");       // but feel free to comment them out after it's working right.
+  Serial1.begin(9600);                     // Uncomment the Serial1.bla lines for debugging.
+  Serial1.println("Program start.");       // but feel free to comment them out after it's working right.
   digitalWrite(greenLED, HIGH);      // Green LED on, everything is go.
   MagnetSetup();
 }

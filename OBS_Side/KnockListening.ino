@@ -1,6 +1,6 @@
 // Records the timing of knocks.
 void listenToSecretKnock() {
-  Serial.println("knock starting");
+  Serial1.println("knock starting");
   int i = 0;
   // First lets reset the listening array.
   for (i = 0; i < maximumKnocks; i++) {
@@ -31,7 +31,7 @@ void listenToSecretKnock() {
     //listen for the next knock or wait for it to timeout.
     if (knockSensorValue >= threshold) {                 //got another knock...
       //record the delay time.
-      Serial.println("knock.");
+      Serial1.println("knock.");
       now = millis();
       knockReadings[currentKnockNumber] = now - startTime;
       currentKnockNumber ++;                             //increment the counter
@@ -58,13 +58,13 @@ void listenToSecretKnock() {
     if (validateKnock() == true) {
       triggerDoorUnlock();
     } else {
-      Serial.println("Secret knock failed.");
+      Serial1.println("Secret knock failed.");
       stripBlink(0);
     }
   } else { // if we're in programming mode we still validate the lock, we just don't do anything with the lock
     validateKnock();
     // and we blink the green and red alternately to show that program is complete.
-    Serial.println("New lock stored.");
+    Serial1.println("New lock stored.");
     digitalWrite(redLED, LOW);
     digitalWrite(greenLED, HIGH);
     for (i = 0; i < 3; i++) {

@@ -12,9 +12,9 @@ void setThreshold(int thresholdValue)
 
 void updateThresholdFromSerial()
 {
-  while (Serial.available() > 0)
+  while (Serial1.available() > 0)
   {
-    char inputChar = Serial.read();
+    char inputChar = Serial1.read();
     if (inputChar == '+')
     {
       setThreshold(threshold + 1);
@@ -27,7 +27,7 @@ void updateThresholdFromSerial()
     {
       setThreshold(10);
     }
-    Serial.print("Set threshold to: "); Serial.println(getThreshold());
+    Serial1.print("Set threshold to: "); Serial1.println(getThreshold());
   }
 }
 
