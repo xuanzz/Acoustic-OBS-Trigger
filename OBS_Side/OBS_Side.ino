@@ -3,7 +3,7 @@
 #define thresholdValueAddress 0
 
 //Average sampling settings
-#define updateInterval  50 //how long between each sampling, in 1/1000 seconds(1000 = 1 sec)
+#define updateInterval  500 //how long between each sampling, in 1/1000 seconds(1000 = 1 sec)
 #define samplingPeriod  10000 //how long would you like to calculate the average value
 #define  windowPeriod 5000 //how long would you like to let the user to input the pulse
 short currentSampleCount = 0; //current count of sample
