@@ -73,4 +73,5 @@ void loop() {
   if (knockSensorValue >= threshold) {
     listenToSecretKnock();
   }
+  updateThresholdFromSerial();
 }
