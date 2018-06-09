@@ -1,3 +1,15 @@
+//Light strip settings
+#include <NeoPixelBus.h>
+const uint16_t PixelCount = 8; // this example assumes 4 pixels, making it smaller will cause a failure
+const uint8_t PixelPin = 21;  // make sure to set this to the correct pin, ignored for Esp8266
+#define colorSaturation 128
+NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> strip(PixelCount, PixelPin);
+RgbColor red(colorSaturation, 0, 0);
+RgbColor green(0, colorSaturation, 0);
+RgbColor blue(0, 0, colorSaturation);
+RgbColor white(colorSaturation);
+RgbColor black(0);
+
 //EEPROM settings
 #include <EEPROM.h>
 #define thresholdValueAddress 0
@@ -42,6 +54,7 @@ int knockSensorValue = 0;           // Last reading of the knock sensor.
 int programButtonPressed = false;   // Flag so we remember the programming button setting at the end of the cycle.
 
 void setup() {
+  stripSetup();
   getThreshold();
   averageSamplingSetup();
   pinMode(lockMotor, OUTPUT);
@@ -62,6 +75,7 @@ void loop() {
   }
   // Listen for any knock at all.
   knockSensorValue = averageValue - abs(analogRead(knockSensor));
+  setStrip((knockSensorValue*100/threshold)*7/100);
   //  if (digitalRead(programSwitch)==HIGH){  // is the program button pressed?
   //    programButtonPressed = true;          // Yes, so lets save that state
   //    digitalWrite(redLED, HIGH);           // and turn on the red light too so we know we're programming.

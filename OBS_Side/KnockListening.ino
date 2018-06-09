@@ -27,6 +27,7 @@ void listenToSecretKnock() {
       previousMillis = millis();
     }
     knockSensorValue = averageValue - abs(analogRead(knockSensor));
+    setStrip((knockSensorValue * 100 / threshold) * 7 / 100);
     //listen for the next knock or wait for it to timeout.
     if (knockSensorValue >= threshold) {                 //got another knock...
       //record the delay time.
@@ -58,14 +59,7 @@ void listenToSecretKnock() {
       triggerDoorUnlock();
     } else {
       Serial.println("Secret knock failed.");
-      digitalWrite(greenLED, LOW);      // We didn't unlock, so blink the red LED as visual feedback.
-      for (i = 0; i < 4; i++) {
-        digitalWrite(redLED, HIGH);
-        delay(100);
-        digitalWrite(redLED, LOW);
-        delay(100);
-      }
-      digitalWrite(greenLED, HIGH);
+      stripBlink(0);
     }
   } else { // if we're in programming mode we still validate the lock, we just don't do anything with the lock
     validateKnock();

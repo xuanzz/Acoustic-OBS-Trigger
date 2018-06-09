@@ -11,12 +11,7 @@ void triggerDoorUnlock() {
   digitalWrite(lockMotor, LOW);            // Turn the motor off.
   MagnetState(1);
   // Blink the green LED a few times for more visual feedback.
-  for (i = 0; i < 5; i++) {
-    digitalWrite(greenLED, LOW);
-    delay(100);
-    digitalWrite(greenLED, HIGH);
-    delay(100);
-  }
+  stripBlink(1);
 
 }
 
