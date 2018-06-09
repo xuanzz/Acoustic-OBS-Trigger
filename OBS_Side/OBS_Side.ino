@@ -1,3 +1,7 @@
+//EEPROM settings
+#include <EEPROM.h>
+#define thresholdValueAddress 0
+
 //Average sampling settings
 #define updateInterval  50 //how long between each sampling, in 1/1000 seconds(1000 = 1 sec)
 #define samplingPeriod  10000 //how long would you like to calculate the average value
@@ -22,7 +26,7 @@ const int greenLED = 2;
 // Status LED
 
 // Tuning constants.  Could be made vars and hoooked to potentiometers for soft configuration, etc.
-const int threshold = 10;           // Minimum signal from the piezo to register as a knock
+int threshold = 10;           // Minimum signal from the piezo to register as a knock
 const int rejectValue = 25;        // If an individual knock is off by this percentage of a knock we don't unlock..
 const int averageRejectValue = 15; // If the average timing of the knocks is off by this percent we don't unlock.
 const int knockFadeTime = 150;     // milliseconds we allow a knock to fade before we listen for another one. (Debounce timer.)
@@ -38,6 +42,7 @@ int knockSensorValue = 0;           // Last reading of the knock sensor.
 int programButtonPressed = false;   // Flag so we remember the programming button setting at the end of the cycle.
 
 void setup() {
+  getThreshold();
   averageSamplingSetup();
   pinMode(lockMotor, OUTPUT);
   pinMode(redLED, OUTPUT);
