@@ -1,6 +1,7 @@
 int getThreshold()
 {
-threshold = EEPROM.read(thresholdValueAddress);
+  threshold = EEPROM.read(thresholdValueAddress);
+  return threshold;
 }
 
 void setThreshold(int thresholdValue)
