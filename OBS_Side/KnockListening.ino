@@ -21,6 +21,11 @@ void listenToSecretKnock() {
     digitalWrite(redLED, HIGH);
   }
   do {
+    if ((millis() - previousMillis) > updateInterval)
+    {
+      updateValue();
+      previousMillis = millis();
+    }
     knockSensorValue = averageValue - abs(analogRead(knockSensor));
     //listen for the next knock or wait for it to timeout.
     if (knockSensorValue >= threshold) {                 //got another knock...
