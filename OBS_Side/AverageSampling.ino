@@ -39,6 +39,6 @@ int calculateWindowsAverage(int startPoint)
   }
   //Serial.println("End Point: " + (String)(((startPoint + averageCount-1) % maxSampleCount)));
   averageValue = returnAverageValue / averageCount;
-  Serial.println("calculate average: " + (String)averageValue);
+  //Serial.println("calculate average: " + (String)averageValue);
   return returnAverageValue;
 }
