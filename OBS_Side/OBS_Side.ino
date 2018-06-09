@@ -11,7 +11,8 @@ const int greenLED = 2;
 // Status LED
 
 // Tuning constants.  Could be made vars and hoooked to potentiometers for soft configuration, etc.
-const int threshold = 512;           // Minimum signal from the piezo to register as a knock
+const int averageValue = 694; //averagevalue
+const int threshold = 15;           // Minimum signal from the piezo to register as a knock
 const int rejectValue = 25;        // If an individual knock is off by this percentage of a knock we don't unlock..
 const int averageRejectValue = 15; // If the average timing of the knocks is off by this percent we don't unlock.
 const int knockFadeTime = 150;     // milliseconds we allow a knock to fade before we listen for another one. (Debounce timer.)
@@ -39,7 +40,7 @@ void setup() {
 
 void loop() {
   // Listen for any knock at all.
-  knockSensorValue = 1023 - analogRead(knockSensor);
+  knockSensorValue = averageValue - abs(analogRead(knockSensor));
   //  if (digitalRead(programSwitch)==HIGH){  // is the program button pressed?
   //    programButtonPressed = true;          // Yes, so lets save that state
   //    digitalWrite(redLED, HIGH);           // and turn on the red light too so we know we're programming.

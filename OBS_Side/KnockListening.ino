@@ -22,7 +22,7 @@ Serial.println("knock starting");
     digitalWrite(redLED, HIGH);
   }
   do {
-    knockSensorValue = 1023 - analogRead(knockSensor);
+    knockSensorValue = averageValue - abs(analogRead(knockSensor));
     //listen for the next knock or wait for it to timeout.
     if (knockSensorValue >= threshold) {                 //got another knock...
       //record the delay time.
